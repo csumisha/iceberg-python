@@ -395,7 +395,7 @@ class RestCatalog(Catalog):
         from urllib import parse
 
         import boto3
-        from botocore.auth import SigV4Auth
+        from botocore.auth import S3SigV4Auth
         from botocore.awsrequest import AWSRequest
         from requests import PreparedRequest
         from requests.adapters import HTTPAdapter
@@ -428,7 +428,7 @@ class RestCatalog(Catalog):
                     method=request.method, url=url, params=params, data=request.body, headers=dict(request.headers)
                 )
 
-                SigV4Auth(credentials, service, region).add_auth(aws_request)
+                S3SigV4Auth(credentials, service, region).add_auth(aws_request)
                 original_header = request.headers
                 signed_headers = aws_request.headers
                 relocated_headers = {}
